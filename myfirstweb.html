@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>李莉莉 - 学生个人介绍</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #fafafa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 80px 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        section.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        h1, h2, h3, h4 {
+            background: linear-gradient(90deg, #4299e1, #38b2ac);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 600;
+            margin-bottom: 24px;
+            position: relative;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #4299e1, #38b2ac);
+            border-radius: 3px;
+        }
+        
+        p {
+            margin-bottom: 16px;
+            color: #4a5568;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #4299e1;
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            color: #2b6cb0;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background: linear-gradient(90deg, #4299e1, #38b2ac);
+            color: white;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 16px;
+            box-shadow: 0 6px 16px rgba(66, 153, 225, 0.25);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 120%;
+            height: 120%;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.6s ease-out;
+        }
+        
+        .btn:active::after {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0;
+        }
+        
+        .btn:hover {
+            background: linear-gradient(90deg, #3182ce, #319795);
+            box-shadow: 0 8px 20px rgba(66, 153, 225, 0.35);
+            transform: translateY(-2px);
+        }
+        
+        /* 导航栏 */
+        header {
+            background-color: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        header.scroll {
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+        }
+        
+        .logo {
+            font-size: 26px;
+            font-weight: 700;
+            color: #2d3748;
+            letter-spacing: -0.5px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 40px;
+        }
+        
+        .nav-links a {
+            color: #4a5568;
+            font-weight: 500;
+            font-size: 15px;
+            padding: 6px 0;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: #4299e1;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #2d3748;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* 英雄区域 */
+        .hero {
+            background: linear-gradient(135deg, #f5f6f7 0%, #e8f4f8 100%);
+            color: #2d3748;
+            text-align: center;
+            padding: 200px 0 140px;
+            margin-top: 74px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        .hero .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .profile-img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid white;
+            margin-bottom: 32px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.5s ease;
+        }
+        
+        .hero:hover .profile-img {
+            transform: scale(1.05);
+        }
+        
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 16px;
+            color: #2d3748;
+            letter-spacing: -0.8px;
+        }
+        
+        .hero p {
+            font-size: 19px;
+            max-width: 650px;
+            margin: 0 auto 40px;
+            color: #4a5568;
+            font-weight: 400;
+        }
+        
+        /* 关于我 */
+        .about {
+            background-color: white;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-image {
+            flex: 0 0 320px;
+            text-align: center;
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+            transition: transform 0.5s ease;
+        }
+        
+        .about-image img:hover {
+            transform: translateY(-5px);
+        }
+        
+        .about-text p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        /* 技能表格 */
+        .skills {
+            background-color: #f8f9fa;
+        }
+        
+        .skills-table-container {
+            overflow-x: auto;
+            margin-top: 32px;
+            border-radius: 12px;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.04);
+        }
+        
+        .skills-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .skills-table thead {
+            background: linear-gradient(90deg, #4299e1, #38b2ac);
+            color: white;
+        }
+        
+        .skills-table th {
+            padding: 18px 28px;
+            text-align: left;
+            font-weight: 500;
+            font-size: 15px;
+            letter-spacing: 0.3px;
+        }
+        
+        .skills-table tbody td {
+            padding: 24px 28px;
+            border-bottom: 1px solid #f0f5ff;
+        }
+        
+        .skills-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .skills-table .category {
+            background-color: #fafdff;
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 15px;
+            width: 180px;
+            position: relative;
+        }
+        
+        .skills-table .category::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: linear-gradient(to bottom, #4299e1, #38b2ac);
+        }
+        
+        .skill-item {
+            margin-bottom: 14px;
+            font-size: 15px;
+            color: #4a5568;
+            display: flex;
+            align-items: center;
+        }
+        
+        .skill-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .skill-item i {
+            font-size: 16px;
+            margin-right: 12px;
+            opacity: 0.8;
+            color: #4299e1;
+        }
+        
+        .skills-table tbody tr:hover {
+            background-color: #fefeff;
+            transform: translateY(-2px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+        
+        /* 兴趣爱好 */
+        .hobbies {
+            background-color: white;
+            padding: 100px 0;
+        }
+        
+        .hobbies-intro {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+        
+        .hobbies-intro p {
+            font-size: 17px;
+            color: #4a5568;
+            line-height: 1.8;
+        }
+        
+        .hobbies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        /* 志愿公益+生活摄影 卡片 */
+        .hobby-card {
+            background-color: white;
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #f0f5ff;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transform-style: preserve-3d;
+        }
+        
+        .hobby-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #4299e1, #38b2ac);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        
+        .hobby-card:hover {
+            transform: translateY(-8px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+        
+        .hobby-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .hobby-icon {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #e8f4f8, #f0f8fb);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .hobby-card:hover .hobby-icon {
+            background: linear-gradient(135deg, #4299e1, #38b2ac);
+            transform: scale(1.1);
+        }
+        
+        .hobby-icon i {
+            font-size: 36px;
+            color: #4299e1;
+            transition: color 0.3s ease;
+        }
+        
+        .hobby-card:hover .hobby-icon i {
+            color: white;
+        }
+        
+        .hobby-card h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+        
+        .hobby-card p {
+            font-size: 16px;
+            color: #4a5568;
+            line-height: 1.8;
+            margin-bottom: 28px;
+        }
+        
+        /* 展开/收起按钮 */
+        .toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            color: #4299e1;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-btn i {
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        /* 照片容器（炫酷展开动效：弹性+渐入） */
+        .photos-container {
+            margin-top: 28px;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 15px;
+            padding-top: 0;
+            border-top: 1px solid transparent;
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); /* 弹性过渡 */
+        }
+        
+        /* 展开状态 */
+        .hobby-card.expanded .photos-container {
+            max-height: 1000px; /* 足够容纳多张照片 */
+            opacity: 1;
+            display: grid;
+            padding-top: 28px;
+            border-top: 1px solid #f0f5ff;
+        }
+        
+        .hobby-card.expanded .toggle-btn i {
+            transform: rotate(180deg);
+        }
+        
+        /* 照片样式 */
+        .photo-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            aspect-ratio: 4/3;
+        }
+        
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .photo-item:hover {
+            transform: scale(1.08);
+            z-index: 10;
+        }
+        
+        .photo-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* 旅游板块：炫酷旅行路线图 */
+        .travel-card {
+            background-color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f0f5ff;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+        
+        .travel-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #4299e1, #38b2ac);
+        }
+        
+        .travel-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .travel-header .hobby-icon {
+            margin-bottom: 20px;
+        }
+        
+        .travel-header h3 {
+            font-size: 22px;
+            color: #2d3748;
+            margin-bottom: 12px;
+        }
+        
+        .travel-header p {
+            font-size: 16px;
+            color: #4a5568;
+            line-height: 1.8;
+        }
+        
+        /* 路线图容器 */
+        .route-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 40px;
+        }
+        
+        /* 路线连接线（桌面端横向） */
+        .route-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #4299e1, #38b2ac);
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+        
+        /* 城市节点列表（桌面端横向） */
+        .city-nodes {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        /* 城市节点样式 */
+        .city-node {
+            width: 80px;
+            height: 80px;
+            background-color: white;
+            border: 3px solid #e8f4f8;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            flex-shrink: 0;
+        }
+        
+        .city-node:hover {
+            transform: scale(1.15);
+            border-color: #4299e1;
+            box-shadow: 0 5px 15px rgba(66, 153, 225, 0.2);
+        }
+        
+        .city-node.active {
+            background: linear-gradient(135deg, #4299e1, #38b2ac);
+            border-color: #4299e1;
+            box-shadow: 0 5px 15px rgba(66, 153, 225, 0.3);
+        }
+        
+        .city-node.active .city-node-text {
+            color: white;
+            font-weight: 500;
+        }
+        
+        .city-node-text {
+            font-size: 13px;
+            color: #4a5568;
+            text-align: center;
+            line-height: 1.4;
+            transition: color 0.3s ease;
+        }
+        
+        /* 旅游照片容器（炫酷展开动效） */
+        .travel-photos {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .travel-photos.active {
+            max-height: 800px;
+            opacity: 1;
+            display: grid;
+            padding-top: 20px;
+            border-top: 1px solid #f0f5ff;
+        }
+        
+        /* 城市照片标题 */
+        .city-photo-title {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: #2d3748;
+            font-weight: 500;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+        
+        .city-photo-title.active {
+            opacity: 1;
+        }
+        
+        /* 联系我 */
+        .contact {
+            background-color: #f8f9fa;
+        }
+        
+        .contact-content {
+            display: flex;
+            gap: 60px;
+            align-items: flex-start;
+        }
+        
+        .contact-info {
+            flex: 1;
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .contact-form {
+            flex: 1;
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .contact-info h3 {
+            font-size: 22px;
+            margin-bottom: 28px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #f0f5ff;
+        }
+        
+        .contact-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: #e8f4f8;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            color: #4299e1;
+            flex-shrink: 0;
+        }
+        
+        .contact-icon i {
+            font-size: 20px;
+        }
+        
+        .contact-details h4 {
+            font-size: 16px;
+            margin-bottom: 6px;
+            color: #2d3748;
+        }
+        
+        .contact-details p {
+            margin-bottom: 0;
+            color: #4a5568;
+            font-size: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #2d3748;
+            font-size: 15px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 15px;
+            color: #2d3748;
+            transition: all 0.3s ease;
+            background-color: #fafafa;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+            background-color: white;
+        }
+        
+        textarea.form-control {
+            min-height: 140px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: #2d3748;
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+        
+        .social-links a {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: #4299e1;
+            transform: translateY(-3px);
+        }
+        
+        .social-links a i {
+            font-size: 20px;
+        }
+        
+        .footer-text {
+            max-width: 600px;
+            margin-bottom: 32px;
+            color: #cbd5e0;
+            font-size: 15px;
+        }
+        
+        .copyright {
+            font-size: 14px;
+            color: #a0aec0;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
+        
+        /* 响应式设计（路线图移动端纵向） */
+        @media (max-width: 992px) {
+            .about-content, .contact-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .about-image {
+                flex: 0 0 280px;
+            }
+            
+            /* 移动端路线图纵向排列 */
+            .route-container {
+                height: auto;
+                margin-bottom: 30px;
+            }
+            
+            .route-line {
+                width: 4px;
+                height: 100%;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .city-nodes {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .city-node {
+                width: 70px;
+                height: 70px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero {
+                padding: 160px 0 100px;
+            }
+            
+            .hero h1 {
+                font-size: 34px;
+            }
+            
+            .hero p {
+                font-size: 17px;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+            
+            .hobbies {
+                padding: 80px 0;
+            }
+            
+            .hobby-card, .travel-card {
+                padding: 30px;
+            }
+            
+            .contact-info, .contact-form {
+                padding: 30px;
+            }
+            
+            .photos-container, .travel-photos {
+                grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            }
+            
+            .city-node {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .city-node-text {
+                font-size: 12px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .profile-img {
+                width: 140px;
+                height: 140px;
+            }
+            
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .hobbies-grid {
+                gap: 24px;
+            }
+            
+            .skill-item {
+                font-size: 14px;
+            }
+            
+            .skills-table th, .skills-table tbody td {
+                padding: 14px 16px;
+            }
+            
+            .photos-container, .travel-photos {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .city-nodes {
+                gap: 20px;
+            }
+        }
+        
+        /* 滚动计数动画 */
+        .counter {
+            font-size: 24px;
+            font-weight: 600;
+            color: #4299e1;
+        }
+    </style>
+    <!-- 引入现代字体Inter -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <!-- 引入Font Awesome图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- 引入粒子动画库 -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">李莉莉</div>
+                <ul class="nav-links">
+                    <li><a href="#about">关于我</a></li>
+                    <li><a href="#skills">我的技能</a></li>
+                    <li><a href="#hobbies">兴趣爱好</a></li>
+                    <li><a href="#contact">联系我</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="hero">
+        <div id="particles-js"></div>
+        <div class="container">
+            <img src="生活照2.jpg" alt="李莉莉" class="profile-img">
+            <h1>你好，我是李莉莉</h1>
+            <p>一名南京审计大学23级计算机学院计算机与技术的本科生 </p>
+            <p>热爱生活，乐于探索</p>
+
+            <a href="#contact" class="btn">联系我</a>
+        </div>
+    </section>
+
+    <!-- 关于我 -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2>关于我</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>我是一名充满活力的计算机专业学生，目前就读于南京审计大学。在课堂上，我系统学习编程知识，夯实专业基础；在课堂外，我热衷于用行动丰富生活、传递温暖。</p>
+                    <p>我先后参与了南京马拉松、浦口马拉松、一起云讲堂以及世界室内田径锦标赛等多项志愿活动。在志愿服务中，我学会了责任与担当，也收获了帮助他人的快乐。</p>
+                    <p>闲暇时，我喜欢用镜头记录生活中的美好，也爱走出校园探索不同城市的风土人情。截至目前，我已走过<span class="counter" data-target="16">0</span>座城市，每一次旅行都让我开阔眼界、增长见识。</p>
+                </div>
+                <div class="about-image">
+                    <img src="学习.jpg" alt="学习场景">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技能（表格形式） -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2>我的技能</h2>
+            <div class="skills-table-container">
+                <table class="skills-table">
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-tags mr-2"></i>技能类别</th>
+                            <th><i class="fas fa-list-check mr-2"></i>具体内容</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="category">编程语言</td>
+                            <td>
+                                <div class="skill-item"><i class="fas fa-coffee mr-2"></i>Java - 学校核心课程，熟悉面向对象编程与基础项目开发</div>
+                                <div class="skill-item"><i class="fas fa-python mr-2"></i>Python - 熟练掌握，用于数据分析和简单Web开发</div>
+                                <div class="skill-item"><i class="fas fa-code mr-2"></i>C语言 - 编程入门基础，熟悉指针、数组等核心概念</div>
+                                <div class="skill-item"><i class="fas fa-code mr-2"></i>C++ - 掌握基础语法，了解STL标准库使用</div>
+                                <div class="skill-item"><i class="fas fa-code mr-2"></i>C# - 熟悉基础语法，能够进行简单Windows应用开发</div>
+                                <div class="skill-item"><i class="fas fa-database mr-2"></i>SQL - 掌握数据库查询、增删改查，熟悉MySQL使用</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category">开发工具</td>
+                            <td>
+                                <div class="skill-item"><i class="fas fa-git mr-2"></i>Git - 熟悉版本控制基本操作</div>
+                                <div class="skill-item"><i class="fas fa-code mr-2"></i>VS Code - 主要使用的代码编辑器</div>
+                                <div class="skill-item"><i class="fas fa-paper-plane mr-2"></i>PyCharm - Python开发环境</div>
+                                <div class="skill-item"><i class="fas fa-paint-brush mr-2"></i>Figma - 能够进行简单的UI设计</div>
+                                <div class="skill-item"><i class="fas fa-rocket mr-2"></i>Postman - API测试工具</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="category">正在学习</td>
+                            <td>
+                                <div class="skill-item"><i class="fas fa-react mr-2"></i>React框架 - 前端开发</div>
+                                <div class="skill-item"><i class="fas fa-server mr-2"></i>Node.js - 后端开发</div>
+                                <div class="skill-item"><i class="fas fa-brain mr-2"></i>数据结构与算法 - 提升编程能力</div>
+                                <div class="skill-item"><i class="fas fa-robot mr-2"></i>机器学习基础 - 了解AI基本原理</div>
+                                <div class="skill-item"><i class="fas fa-book-open mr-2"></i>英语 - 提高专业文献阅读能力</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- 兴趣爱好（3类核心+炫酷动效+旅行路线图） -->
+    <section id="hobbies" class="hobbies">
+        <div class="container">
+            <h2>我的兴趣爱好</h2>
+            <div class="hobbies-intro">
+                <p>生活不止编程与学习，我始终保持对世界的好奇与热爱。以下是我最珍视的三类兴趣，志愿和摄影板块点击可展开查看照片，旅游板块点击路线图上的城市节点即可查看对应旅行照片～</p>
+            </div>
+            <div class="hobbies-grid">
+                <!-- 志愿公益 -->
+                <div class="hobby-card" onclick="toggleHobbyCard(this)">
+                    <div class="hobby-icon">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <h3>志愿公益</h3>
+                    <p>热衷于参与各类志愿服务，从马拉松赛事保障到公益讲堂支持，再到国际赛事志愿。每一次付出都让我感受到责任与温暖，也让我明白微小的行动能汇聚成巨大的力量，愿一直用行动传递善意。</p>
+                    <div class="toggle-btn">查看志愿活动照片 <i class="fas fa-chevron-down"></i></div>
+                    <!-- 照片容器 -->
+                    <div class="photos-container">
+                        <div class="photo-item"><img src="志愿1.jpg" alt="浦口马拉松志愿"></div>
+                        <div class="photo-item"><img src="志愿2.jpg" alt="浦口马拉松志愿"></div>
+                        <div class="photo-item"><img src="志愿3.jpg" alt="浦口马拉松志愿"></div>
+                    </div>
+                </div>
+                <!-- 生活摄影 -->
+                <div class="hobby-card" onclick="toggleHobbyCard(this)">
+                    <div class="hobby-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3>生活摄影</h3>
+                    <p>喜欢用镜头记录生活中的美好瞬间，无论是校园里的四季变换、志愿服务中的温暖片段，还是旅行途中的人文风景，都值得被珍藏。摄影让我学会观察细节、发现美好，也让我更懂得珍惜当下的每一刻。</p>
+                    <div class="toggle-btn">查看摄影作品 <i class="fas fa-chevron-down"></i></div>
+                    <!-- 照片容器 -->
+                    <div class="photos-container">
+                        <div class="photo-item"><img src="校园1.jpg" alt="校园春景"></div>
+                        <div class="photo-item"><img src="校园2.jpg" alt="志愿活动抓拍"></div>
+                        <div class="photo-item"><img src="校园3.jpg" alt="城市夜景"></div>
+                        <div class="photo-item"><img src="校园4.jpg" alt="自然风景"></div>
+                        <div class="photo-item"><img src="校园5.jpg" alt="人文纪实"></div>
+                    </div>
+                </div>
+
+                <!-- 旅游 -->
+                <div class="travel-card">
+                    <div class="travel-header">
+                        <div class="hobby-icon" style="margin-bottom: 20px;">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <h3>旅游</h3>
+                        <p>喜欢走出校园，探索不同城市的风土人情。已走过16座城市，点击路线图上的城市节点即可查看对应旅行照片～</p>
+                    </div>
+                    
+                    <!-- 路线图容器 -->
+                    <div class="route-container">
+                        <!-- 路线连接线 -->
+                        <div class="route-line"></div>
+                        
+                        <!-- 城市节点列表 -->
+                        <div class="city-nodes">
+                            <div class="city-node" onclick="showCityPhotos('nanjing', this)">
+                                <div class="city-node-text">南京</div>
+                            </div>
+                            <div class="city-node" onclick="showCityPhotos('maanshan', this)">
+                                <div class="city-node-text">马鞍山</div>
+                            </div>
+                            <div class="city-node" onclick="showCityPhotos('chuzhou', this)">
+                                <div class="city-node-text">滁州</div>
+                            </div>
+                            <div class="city-node" onclick="showCityPhotos('xuzhou', this)">
+                                <div class="city-node-text">徐州</div>
+                            </div>
+                            <div class="city-node" onclick="showCityPhotos('luoyang', this)">
+                                <div class="city-node-text">洛阳</div>
+                            </div>
+                            <div class="city-node" onclick="showCityPhotos('zhumadian', this)">
+                                <div class="city-node-text">驻马店</div>
+                            </div>
+                            <div class="city-node" onclick="showCityPhotos('huangshan', this)">
+                                <div class="city-node-text">黄山</div>
+                            </div>
+                            <div class="city-node" onclick="showCityPhotos('hangzhou', this)">
+                                <div class="city-node-text">杭州</div>
+                            </div>
+                            <div class="city-node" onclick="showCityPhotos('shaoxing', this)">
+                                <div class="city-node-text">绍兴</div>
+                            </div>
+                            <div class="city-node" onclick="showCityPhotos('suzhou', this)">
+                                <div class="city-node-text">苏州</div>
+                            </div>
+                            <div class="city-node" onclick="showCityPhotos('wuxi', this)">
+                                <div class="city-node-text">无锡</div>
+                            </div>
+                            <div class="city-node" onclick="showCityPhotos('lianyungang', this)">
+                                <div class="city-node-text">连云港</div>
+                            </div>
+                            <div class="city-node" onclick="showCityPhotos('rizhao', this)">
+                                <div class="city-node-text">日照</div>
+                            </div>
+                            <div class="city-node" onclick="showCityPhotos('qingdao', this)">
+                                <div class="city-node-text">青岛</div>
+                            </div>
+                            <div class="city-node" onclick="showCityPhotos('beijing', this)">
+                                <div class="city-node-text">北京</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 城市照片标题 -->
+                    <h4 class="city-photo-title" id="cityPhotoTitle"></h4>
+                    
+                    <!-- 旅游照片容器 -->
+                    <div class="travel-photos" id="travelPhotosContainer">
+                        <!-- 照片由JS动态加载 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我 -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>联系我</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>想要了解更多？</h3>
+                    <p>如果你对我的经历感兴趣，或者想和我交流技术、志愿活动、旅行摄影相关的话题，欢迎通过以下方式联系我，我会尽快回复你！</p>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>邮箱</h4>
+                            <p>lilili@example.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>电话</h4>
+                            <p>138-0013-8000</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>地址</h4>
+                            <p>南京审计大学计算机科学学院</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">你的姓名</label>
+                            <input type="text" id="name" class="form-control" placeholder="请输入你的姓名">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">你的邮箱</label>
+                            <input type="email" id="email" class="form-control" placeholder="请输入你的邮箱">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">想聊点什么？</label>
+                            <textarea id="message" class="form-control" placeholder="技术交流/志愿分享/摄影技巧/旅行攻略..."></textarea>
+                        </div>
+                        <button type="submit" class="btn">发送留言</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-weixin"></i></a>
+                    <a href="#"><i class="fab fa-qq"></i></a>
+                    <a href="#"><i class="fab fa-weibo"></i></a>
+                </div>
+                <p class="footer-text">热爱生活，乐于探索，在技术与善意中不断成长。感谢你的访问！</p>
+                <div class="copyright">
+                    &copy; 2025 李莉莉 - 学生个人网站 | 努力成为更好的自己
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 表单提交处理
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('感谢你的留言！我会尽快回复你。');
+            this.reset();
+        });
+        
+        // 导航平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if(window.scrollY > 50) {
+                header.classList.add('scroll');
+            } else {
+                header.classList.remove('scroll');
+            }
+        });
+        
+        // 滚动渐显动画
+        const sections = document.querySelectorAll('section');
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+        
+        // 初始化首屏动画
+        setTimeout(() => {
+            document.querySelector('.hero').classList.add('active');
+        }, 100);
+        
+        // 志愿/摄影卡片展开/收起功能（炫酷动效）
+        function toggleHobbyCard(card) {
+            card.classList.toggle('expanded');
+        }
+        
+        // 照片点击灯箱效果
+        document.querySelectorAll('.photo-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const imgSrc = this.querySelector('img').src;
+                const lightbox = document.createElement('div');
+                lightbox.style.cssText = `position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s ease`;
+                const lightboxImg = document.createElement('img');
+                lightboxImg.src = imgSrc;
+                lightboxImg.style.cssText = `max-width:90%;max-height:90%;border:5px solid white;border-radius:10px;transform:scale(0.9);transition:transform 0.3s ease`;
+                const closeBtn = document.createElement('button');
+                closeBtn.innerHTML = '<i class="fas fa-times"></i>';
+                closeBtn.style.cssText = `position:absolute;top:20px;right:30px;font-size:30px;color:white;background:transparent;border:none;cursor:pointer`;
+                
+                lightbox.appendChild(lightboxImg);
+                lightbox.appendChild(closeBtn);
+                document.body.appendChild(lightbox);
+                document.body.style.overflow = 'hidden';
+                
+                // 动画生效
+                setTimeout(() => {
+                    lightbox.style.opacity = '1';
+                    lightboxImg.style.transform = 'scale(1)';
+                }, 10);
+                
+                // 关闭灯箱
+                closeBtn.addEventListener('click', () => {
+                    lightbox.style.opacity = '0';
+                    lightboxImg.style.transform = 'scale(0.9)';
+                    setTimeout(() => {
+                        document.body.removeChild(lightbox);
+                        document.body.style.overflow = '';
+                    }, 300);
+                });
+                
+                lightbox.addEventListener('click', (e) => {
+                    if(e.target === lightbox) closeBtn.click();
+                });
+            });
+        });
+        
+        // 旅游板块：显示城市照片（炫酷展开动效）
+        function showCityPhotos(city, node) {
+            // 移除所有节点的active状态
+            document.querySelectorAll('.city-node').forEach(item => {
+                item.classList.remove('active');
+            });
+            // 给当前点击的节点添加active状态
+            node.classList.add('active');
+            
+            // 定义每个城市的照片和标题
+            const cityConfig = {
+                nanjing: {
+                    title: '南京旅行照片',
+                    photos: [
+                        '南京1.jpg',
+                        '南京2.jpg',
+                        '南京3.jpg'
+                    ]
+                },
+                maanshan: {
+                    title: '马鞍山旅行照片',
+                    photos: [
+                        '马鞍山1.jpg',
+                        '马鞍山2.jpg'
+                    ]
+                },
+                chuzhou: {
+                    title: '滁州旅行照片',
+                    photos: [
+                        '滁州1.jpg',
+                        '滁州2.jpg'
+                    ]
+                },
+                xuzhou: {
+                    title: '徐州旅行照片',
+                    photos: [
+                        '徐州1.jpg',
+                        '徐州2.jpg'
+                    ]
+                },
+                luoyang: {
+                    title: '洛阳旅行照片',
+                    photos: [
+                        '洛阳1.jpg',
+                        '洛阳2.jpg',
+                        '洛阳3.jpg'
+                    ]
+                },
+                zhumadian: {
+                    title: '驻马店旅行照片',
+                    photos: [
+                        '驻马店1.jpg',
+                        '驻马店2.jpg'
+                    ]
+                },
+
+                huangshan: {
+                    title: '黄山旅行照片',
+                    photos: [
+                        '黄山1.jpg',
+                        '黄山2.jpg',
+                         '黄山3.jpg'
+                    ]
+                },
+                hangzhou: {
+                    title: '杭州旅行照片',
+                    photos: [
+                        '杭州1.jpg',
+                        '杭州2.jpg',
+                       '杭州3.jpg'
+                    ]
+                },
+                shaoxing: {
+                    title: '绍兴旅行照片',
+                    photos: [
+                        '绍兴1.jpg',
+                        '绍兴2.jpg'
+                    ]
+                },
+                suzhou: {
+                    title: '苏州旅行照片',
+                    photos: [
+                        '苏州1.jpg',
+                        '苏州2.jpg',
+                        '苏州3.jpg'
+                    ]
+                },
+                wuxi: {
+                    title: '无锡旅行照片',
+                    photos: [
+                        '无锡1.jpg',
+                        '无锡2.jpg'
+                    ]
+                },
+                lianyungang: {
+                    title: '连云港旅行照片',
+                    photos: [
+                        '连云港1.jpg',
+                        '连云港2.jpg'
+                    ]
+                },
+                rizhao: {
+                    title: '日照旅行照片',
+                    photos: [
+                        '日照1.jpg',
+                        '日照2.jpg'
+                    ]
+                },
+                qingdao: {
+                    title: '青岛旅行照片',
+                    photos: [
+                        '青岛1.jpg',
+                        '青岛2.jpg',
+                        '青岛3.jpg'
+                    ]
+                },
+                beijing: {
+                    title: '北京旅行照片',
+                    photos: [
+                        '北京1.jpg',
+                        '北京2.jpg',
+                        '北京3.jpg'
+                    ]
+                }
+            };
+            
+            // 更新照片标题
+            const titleElement = document.getElementById('cityPhotoTitle');
+            titleElement.textContent = cityConfig[city].title;
+            titleElement.classList.add('active');
+            
+            // 生成照片HTML
+            const photosContainer = document.getElementById('travelPhotosContainer');
+            let photosHtml = '';
+            cityConfig[city].photos.forEach(photoSrc => {
+                photosHtml += `<div class="photo-item"><img src="${photoSrc}" alt="${cityConfig[city].title}"></div>`;
+            });
+            photosContainer.innerHTML = photosHtml;
+            
+            // 触发展开动效
+            setTimeout(() => {
+                photosContainer.classList.add('active');
+            }, 50);
+            
+            // 平滑滚动到照片区域
+            photosContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        
+        // 粒子动画配置
+        particlesJS("particles-js", {
+          particles: {
+            number: { value: 80, density: { enable: true, value_area: 800 } },
+            color: { value: "#4299e1" },
+            shape: { type: "circle" },
+            opacity: { value: 0.5, random: true },
+            size: { value: 3, random: true },
+            line_linked: { enable: true, distance: 150, color: "#4299e1", opacity: 0.2, width: 1 },
+            move: { enable: true, speed: 1, direction: "none", random: true, straight: false, out_mode: "out", bounce: false }
+          },
+          interactivity: {
+            detect_on: "canvas",
+            events: {
+              onhover: { enable: true, mode: "grab" },
+              onclick: { enable: true, mode: "push" },
+              resize: true
+            },
+            modes: {
+              grab: { distance: 140, line_linked: { opacity: 0.5 } },
+              push: { particles_nb: 4 }
+            }
+          },
+          retina_detect: true
+        });
+        
+        // 数字计数动画
+        const counters = document.querySelectorAll('.counter');
+        counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            let current = 0;
+            
+            function updateCounter() {
+                current++;
+                counter.textContent = current;
+                if(current < target) {
+                    setTimeout(updateCounter, 10);
+                }
+            }
+            
+            // 滚动触发计数
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting) {
+                        updateCounter();
+                        observer.unobserve(counter);
+                    }
+                });
+            });
+            
+            observer.observe(counter);
+        });
+    </script>
+</body>
+</html>
